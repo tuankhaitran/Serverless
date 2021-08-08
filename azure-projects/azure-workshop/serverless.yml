@@ -1,0 +1,43 @@
+service: clark-azure-nodejs # NOTE: update this with your service name
+
+provider:
+  name: azure
+  location: West US
+
+plugins:
+  - serverless-azure-functions
+
+functions:
+  get-index:
+    handler: functions/get-index.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel : anonymous
+      - http: true
+        x-azure-settings:
+          direction: out
+          name: res
+
+  fetch-books:
+    handler: functions/fetch-books.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel : admin
+      - http: true
+        x-azure-settings:
+          direction: out
+          name: res
+
+  search-books:
+    handler: functions/search-books.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel : function
+      - http: true
+        x-azure-settings:
+          direction: out
+          name: res
+          

@@ -1,0 +1,40 @@
+service: 'serverless-chatroom-demo'
+
+custom:
+  tableName: 'serverless-chatroom-demo-table-${self:provider.stage}'
+
+provider:
+  name: 'aws'
+  runtime: 'nodejs8.10'
+  stage: 'dev'
+  region: 'us-east-1'
+
+functions:
+  createChatMessage:
+    handler: handler.createChatMessage
+    events:
+      - http:
+          method: POST
+          path: /messages
+          private: false
+  getMessage:
+    handler: handler.getMessage
+    events:
+      - http:
+          method: GET
+          path: /messages
+          private: false
+  getRoomMessages:
+    handler: handler.getRoomMessages
+    events:
+      - http:
+          method: GET
+          path: /messages/room/{room}
+          private: false
+  getUserMessages:
+    handler: handler.getUserMessages
+    events:
+      - http:
+          method: GET
+          path: /messages/user/{userId}
+          private: false
